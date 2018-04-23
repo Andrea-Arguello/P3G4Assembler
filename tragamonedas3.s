@@ -37,6 +37,8 @@ inputb:             .asciz   " "
 asciiart:
 .asciz "                              .-------.\n                              |Jackpot|\n                  ____________|_______|____________\n                 |  __    __    ___  _____   __    |\n                 | / _\\  / /   /___\\/__   \\ / _\\   |\n                 | \\ \\  / /   //  //  / /\\ \\\\ \\  25|\n                 | _\\ \\/ /___/ \\_//  / /  \\/_\\ \\ []|\n                 | \\__/\\____/\\___/   \\/     \\__/ []|(__)\n                 |===_______===_______===_______===| ||\n                 ||*| _____ |*| _____ |*| _____ |*|| ||\n                 ||*||     ||*||     ||*||     ||*|| ||\n                 ||*||*   *||*||*   *||*||*   *||*|| ||\n                 ||*||_____||*||_____||*||_____||*|| ||\n                 ||*|_______|*|_______|*|_______|*||_//\n                 |===___________________________===|_/\n                 ||*|                           |*||\n                 ||*|                           |*||\n                 ||*|___________________________|*||\n                 |===___________________________===|\n                 |  /___________________________\\  |\n                 |   |                         |   |\n                _|    \\_______________________/    |_\n               (_____________________________________)\n"
 
+asciiart2:
+.asciz "                              .-------.\n                              |Jackpot|\n                  ____________|_______|____________\n                 |  __    __    ___  _____   __    |\n                 | / _\\  / /   /___\\/__   \\ / _\\   |\n                 | \\ \\  / /   //  //  / /\\ \\\\ \\  25|\n                 | _\\ \\/ /___/ \\_//  / /  \\/_\\ \\ []|\n                 | \\__/\\____/\\___/   \\/     \\__/ []|(__)\n                 |===_______===_______===_______===| ||\n                 ||*| _____ |*| _____ |*| _____ |*|| ||\n                 ||*||     ||*||     ||*||     ||*|| ||\n                 ||*||* %d *||*||* %d *||*||* %d *||*|| ||\n                 ||*||_____||*||_____||*||_____||*|| ||\n                 ||*|_______|*|_______|*|_______|*||_//\n                 |===___________________________===|_/\n                 ||*|                           |*||\n                 ||*|                           |*||\n                 ||*|___________________________|*||\n                 |===___________________________===|\n                 |  /___________________________\\  |\n                 |   |                         |   |\n                _|    \\_______________________/    |_\n               (_____________________________________)\n"
 
 
 
@@ -135,7 +137,7 @@ main:
 
       randoms:
         /*Asignacion del primer numero*/
-        bl aleatorios
+        bl randomdos
         mov r2,r0
         and r2,r2,#3
         cmp r2,#0
@@ -143,7 +145,7 @@ main:
         ldr r0,=arreglo
         str r2,[r0]
         /*Asignacion del segundo numero*/
-        bl aleatorios
+        bl randomdos
         mov r2,r0
         and r2,r2,#3
         cmp r2,#0
@@ -152,7 +154,7 @@ main:
         add r0, r0, #4
         str r2,[r0]
         /*Asignacion del tercer numero*/
-        bl aleatorios
+        bl randomdos
         mov r2,r0
         and r2,r2,#3
         cmp r2,#0
@@ -236,20 +238,10 @@ comparacion: @compara los 3 numeros del arreglo para ver si son iguales
   ldr r6,[r3],#4
   ldr r7,[r3],#4
 
-  ldr r0,=formatoentrada
+  ldr r0,=asciiart2
   mov r1,r5
-  push {lr}
-  bl printf
-  pop {lr}
-
-  ldr r0,=formatoentrada
-  mov r1,r6
-  push {lr}
-  bl printf
-  pop {lr}
-
-  ldr r0,=formatoentrada
-  mov r1,r7
+  mov r2, r6
+  mov r3, r7
   push {lr}
   bl printf
   pop {lr}
@@ -271,7 +263,7 @@ comparacion: @compara los 3 numeros del arreglo para ver si son iguales
 perder:
   push {lr}
   ldr r0,=lose
-  mov r0,r0 @r0 es salida
+  @mov r0,r0 @r0 es salida
   bl puts
   pop {lr}
 
@@ -287,7 +279,7 @@ perder:
   add r11,r9,r8
   ldr r9,=monedaMaquina
   str r11,[r9]
-  
+
   @coloca el mensaje de monedas en la maquina
   ldr r0,=maquina
   mov r1,r11
@@ -341,7 +333,7 @@ conMonedas:
   sub r11,r3,r4
   ldr r3,=monedaMaquina
   str r11,[r3]
-  
+
   @coloca el mensaje de monedas en la maquina
   ldr r0,=maquina
   mov r1,r11
@@ -389,7 +381,7 @@ sinMonedas:
   mov r11,#0
   ldr r3,=monedaMaquina
   str r11,[r3]
-  
+
   @coloca el mensaje de monedas en la maquina
   ldr r0,=maquina
   mov r1,r11
@@ -397,7 +389,3 @@ sinMonedas:
   bl printf
   pop {lr}
   mov pc,lr
-
-
-
-  
