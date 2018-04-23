@@ -1,5 +1,7 @@
-/*Intento del tragamonedas 2*/
+/*tragamonedas3.s*/
+/*Proyecto 3: Temario 4: maquina tragamonedas*/
 /*Javier Anleu, 17149 y Andrea Arguello, 17801*/
+/*23 de abril de 2018*/
 
 
 @ datos en .data
@@ -305,10 +307,11 @@ perder:
 ganar:
   ldr r4,=apuesta
   ldr r4,[r4]
+  
   mov r8,#2
-  mul r4,r8,r4 @multiplica la apuesta por dos
+  mul r8,r8,r4 @multiplica la apuesta por dos
   ldr r0,=win
-  mov r1,r4
+  mov r1,r8
   push {lr}
   bl printf @coloca el mensaje
   pop {lr}
